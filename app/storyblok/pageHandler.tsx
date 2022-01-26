@@ -1,22 +1,26 @@
-import type { MetaFunction, LoaderFunction } from "remix";
-import { useLoaderData, Link } from "remix";
+import type { MetaFunction, LoaderFunction, ActionFunction } from "remix";
+import { useLoaderData } from "remix";
 import Storyblok from "~/storyblok/client";
+import DynamicComponent from "~/components";
+import dataLoader from "~/storyblok/dataLoader";
 
-// Loaders provide data to components and are only ever called on the server, so
-// you can connect to a database or run any server side code you want right next
-// to the component that renders it.
-// https://remix.run/api/conventions#loader
 export let loader: LoaderFunction = async ({ params }) => {
   // catch all slugs, or if no params we can assume
   const slug = params["*"] || "home";
-  const data = await Storyblok.get(`cdn/stories/${slug}`, {
+  const page = await Storyblok.get(`cdn/stories/${slug}`, {
     version: "draft",
   });
+  const data = await dataLoader(page);
   return {
-    headers: data.headers,
-    meta: data.data.story.content.meta,
-    content: data.data.story.content,
+    headers: page.headers,
+    meta: page.data.story.content.meta,
+    content: page.data.story.content,
+    data,
   };
+};
+
+export let action: ActionFunction = async ({ request, params }) => {
+  return null;
 };
 
 // https://remix.run/api/conventions#meta
@@ -29,14 +33,12 @@ export let meta: MetaFunction = ({ data }) => {
 
 // https://remix.run/guides/routing#index-routes
 export default function Catch() {
-  let data = useLoaderData<any>();
+  let { content } = useLoaderData<any>();
   return (
     <div>
       <h1>test</h1>
-      {data?.content?.body.map((component) => (
-        <div key={component._uid}>
-          <h3>{component.title}</h3>
-        </div>
+      {content?.body.map((component) => (
+        <DynamicComponent key={component._uid} component={component} />
       ))}
     </div>
   );
