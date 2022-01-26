@@ -9,14 +9,6 @@ export default async function actionHandler(context: DataFunctionArgs) {
   return ComponentActions[component](context);
 }
 
-async function extractActionFromComponent(uid, context) {
-  const componentData = await ComponentLoaders[uid](context);
-  return {
-    data: componentData,
-    uid: component._uid,
-  };
-}
-
 export const ComponentActions = {
   "async-component": AsyncComponentAction,
   "normal-component": NormalComponentAction,

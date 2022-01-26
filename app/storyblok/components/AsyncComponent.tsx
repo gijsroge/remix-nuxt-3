@@ -8,7 +8,7 @@ export async function loader(context: any) {
 }
 
 export async function action(context: any) {
-  return new Promise((resolve) => setTimeout(() => resolve(context), 1000));
+  return new Promise((resolve) => setTimeout(() => resolve(context), 3000));
 }
 
 export function component({ block }) {
@@ -24,7 +24,6 @@ export function component({ block }) {
 
   return (
     <div>
-      {scopedTransition()?.state === "submitting" ? "hoi" : "meh"}
       <h1>{block.title}</h1>
       <Form method="post" action="?">
         <input type="hidden" value={block._uid} name="uid" />
@@ -32,7 +31,9 @@ export function component({ block }) {
         <input type="text" name="title" />
         <input type="text" name="description" />
         <button disabled={scopedTransition()?.state === "submitting"}>
-          Submit
+          {scopedTransition()?.state === "submitting"
+            ? "Submitting..."
+            : "Submit"}
         </button>
       </Form>
     </div>

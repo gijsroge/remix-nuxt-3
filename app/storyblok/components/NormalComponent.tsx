@@ -1,4 +1,5 @@
-import { useLoaderData, Form } from "remix";
+import { useLoaderData, Form, useTransition, useActionData } from "remix";
+import { Transition } from "@remix-run/react/transition";
 
 export async function loader(context: any) {
   const index = context.index;
@@ -7,23 +8,33 @@ export async function loader(context: any) {
 }
 
 export async function action(context: any) {
- return {errors: {}}
-
-
+  return new Promise((resolve) => setTimeout(() => resolve(context), 3000));
 }
 
 export function component({ block }) {
+  const transition = useTransition();
   const { data } = useLoaderData<any>();
+  const actionData = useActionData();
+
+  const scopedTransition = (): Transition => {
+    if (transition?.submission?.formData.get("uid") === block._uid)
+      return transition;
+    return {} as Transition;
+  };
+
   return (
     <div>
       <h1>{block.title}</h1>
-
-      <h2>Formdata:</h2>
-
       <Form method="post" action="?">
+        <input type="hidden" value={block._uid} name="uid" />
+        <input type="hidden" value={block.component} name="component" />
         <input type="text" name="title" />
         <input type="text" name="description" />
-        <button>Submit</button>
+        <button disabled={scopedTransition()?.state === "submitting"}>
+          {scopedTransition()?.state === "submitting"
+            ? "Submitting..."
+            : "Submit"}
+        </button>
       </Form>
     </div>
   );
