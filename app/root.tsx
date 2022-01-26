@@ -106,7 +106,7 @@ function Document({
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="p-4">
         {children}
         <ScrollRestoration />
         <Scripts />

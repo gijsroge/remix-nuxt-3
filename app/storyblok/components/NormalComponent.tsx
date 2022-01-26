@@ -7,7 +7,9 @@ export async function loader(context: any) {
 }
 
 export async function action(context: any) {
-  return null;
+ return {errors: {}}
+
+
 }
 
 export function component({ block }) {
@@ -18,7 +20,7 @@ export function component({ block }) {
 
       <h2>Formdata:</h2>
 
-      <Form method="post" action="/">
+      <Form method="post" action="?">
         <input type="text" name="title" />
         <input type="text" name="description" />
         <button>Submit</button>
