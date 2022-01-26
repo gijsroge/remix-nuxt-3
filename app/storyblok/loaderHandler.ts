@@ -1,8 +1,8 @@
 import { Story } from "storyblok-js-client";
-import { Components } from "~/components";
-import { AsyncComponentLoader } from "~/components/AsyncComponent";
+import { loader as AsyncComponentLoader } from "~/storyblok/components/AsyncComponent";
+import { loader as NormalComponentLoader } from "~/storyblok/components/NormalComponent";
 
-export default async function dataLoader(story: Story) {
+export default async function loaderHandler(story: Story) {
   const loaders = story.data.story.content.body.map(async (component) => {
     return await extractLoaderFromComponent(component);
   });
@@ -24,4 +24,5 @@ async function extractLoaderFromComponent(component) {
 
 export const ComponentLoaders = {
   "async-component": AsyncComponentLoader,
+  "normal-component": NormalComponentLoader,
 };

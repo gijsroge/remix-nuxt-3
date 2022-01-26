@@ -1,6 +1,6 @@
 import { createElement } from "react";
-import {AsyncComponent} from "~/components/AsyncComponent";
-import {NormalComponent} from "~/components/NormalComponent";
+import { component as AsyncComponent } from "~/storyblok/components/AsyncComponent";
+import { component as NormalComponent } from "~/storyblok/components/NormalComponent";
 
 export const Components = {
   "async-component": AsyncComponent,

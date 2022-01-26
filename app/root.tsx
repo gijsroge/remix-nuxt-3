@@ -6,22 +6,24 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useCatch
+  useCatch,
 } from "remix";
 import type { LinksFunction } from "remix";
 
 import globalStylesUrl from "~/styles/global.css";
 import darkStylesUrl from "~/styles/dark.css";
+import styles from "./tailwind-styles.css";
 
 // https://remix.run/api/app#links
 export let links: LinksFunction = () => {
   return [
     { rel: "stylesheet", href: globalStylesUrl },
+    { rel: "stylesheet", href: styles },
     {
       rel: "stylesheet",
       href: darkStylesUrl,
-      media: "(prefers-color-scheme: dark)"
-    }
+      media: "(prefers-color-scheme: dark)",
+    },
   ];
 };
 
@@ -46,11 +48,6 @@ export function ErrorBoundary({ error }: { error: Error }) {
         <div>
           <h1>There was an error</h1>
           <p>{error.message}</p>
-          <hr />
-          <p>
-            Hey, developer, you should replace this with what you want your
-            users to see.
-          </p>
         </div>
       </Layout>
     </Document>
@@ -95,7 +92,7 @@ export function CatchBoundary() {
 
 function Document({
   children,
-  title
+  title,
 }: {
   children: React.ReactNode;
   title?: string;
@@ -120,10 +117,5 @@ function Document({
 }
 
 function Layout({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="remix-app">
-      {children}
-    </div>
-  );
+  return <div className="remix-app">{children}</div>;
 }
-
