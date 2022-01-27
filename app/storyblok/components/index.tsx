@@ -2,12 +2,12 @@ import { createElement } from "react";
 import { component as AsyncComponent } from "~/storyblok/components/AsyncComponent";
 import { component as NormalComponent } from "~/storyblok/components/NormalComponent";
 
-export const Components = {
+export const Components: any = {
   "async-component": AsyncComponent,
   "normal-component": NormalComponent,
 };
 
-const DynamicComponent = (props) => {
+const DynamicComponent = (props: any) => {
   const block = props.component;
   if (typeof Components[block?.component] !== "undefined") {
     return createElement(Components[block?.component], {

@@ -4,12 +4,16 @@ import { DataFunctionArgs } from "@remix-run/server-runtime";
 
 export default async function actionHandler(context: DataFunctionArgs) {
   const formData = await context.request.formData();
-  const component = formData.get("component");
+  const component: FormDataEntryValue | null = formData.get("component");
 
-  return ComponentActions[component](context);
+  if (component) {
+    return ComponentActions[component as string](context);
+  }
+
+  return null;
 }
 
-export const ComponentActions = {
+export const ComponentActions: any = {
   "async-component": AsyncComponentAction,
   "normal-component": NormalComponentAction,
 };

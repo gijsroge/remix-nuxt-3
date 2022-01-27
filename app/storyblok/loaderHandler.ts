@@ -3,7 +3,7 @@ import { loader as AsyncComponentLoader } from "~/storyblok/components/AsyncComp
 import { loader as NormalComponentLoader } from "~/storyblok/components/NormalComponent";
 
 export default async function loaderHandler(story: Story) {
-  const loaders = story.data.story.content.body.map(async (component) => {
+  const loaders = story.data.story.content.body.map(async (component: any) => {
     return await extractLoaderFromComponent(component);
   });
 
@@ -14,7 +14,7 @@ export default async function loaderHandler(story: Story) {
   }, {});
 }
 
-async function extractLoaderFromComponent(component) {
+async function extractLoaderFromComponent(component: any) {
   const componentData = await ComponentLoaders[component.component](component);
   return {
     data: componentData,
@@ -22,7 +22,7 @@ async function extractLoaderFromComponent(component) {
   };
 }
 
-export const ComponentLoaders = {
+export const ComponentLoaders: any = {
   "async-component": AsyncComponentLoader,
   "normal-component": NormalComponentLoader,
 };

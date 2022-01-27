@@ -11,7 +11,7 @@ export async function action(context: any) {
   return new Promise((resolve) => setTimeout(() => resolve(context), 3000));
 }
 
-export function component({ block }) {
+export function component({ block }: { block: any }) {
   const transition = useTransition();
   const { data } = useLoaderData<any>();
   const actionData = useActionData();

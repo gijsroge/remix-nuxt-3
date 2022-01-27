@@ -39,7 +39,7 @@ export default function Catch() {
 
   return (
     <div>
-      {content?.body.map((component) => (
+      {content?.body.map((component: any) => (
         <DynamicComponent key={component._uid} component={component} />
       ))}
     </div>

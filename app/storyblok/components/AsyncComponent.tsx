@@ -1,4 +1,4 @@
-import { Form, useActionData, useLoaderData, useTransition } from "remix";
+import {Form, useActionData, useFetcher, useLoaderData, useTransition} from "remix";
 import { Transition } from "@remix-run/react/transition";
 
 export async function loader(context: any) {
@@ -11,10 +11,11 @@ export async function action(context: any) {
   return new Promise((resolve) => setTimeout(() => resolve(context), 3000));
 }
 
-export function component({ block }) {
+export function component({ block }: { block: any }) {
   const transition = useTransition();
   const { data } = useLoaderData<any>();
   const actionData = useActionData();
+  const fetcher = useFetcher();
 
   const scopedTransition = (): Transition => {
     if (transition?.submission?.formData.get("uid") === block._uid)
@@ -25,7 +26,7 @@ export function component({ block }) {
   return (
     <div>
       <h1>{block.title}</h1>
-      <Form method="post" action="?">
+      <fetcher.Form method="post" action="?">
         <input type="hidden" value={block._uid} name="uid" />
         <input type="hidden" value={block.component} name="component" />
         <input type="text" name="title" />
@@ -35,7 +36,7 @@ export function component({ block }) {
             ? "Submitting..."
             : "Submit"}
         </button>
-      </Form>
+      </fetcher.Form>
     </div>
   );
 }
