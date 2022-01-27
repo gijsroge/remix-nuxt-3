@@ -1,5 +1,13 @@
-import {Form, useActionData, useLoaderData, useLocation, useMatches, useTransition} from "remix";
+import {
+  Form,
+  useActionData,
+  useLoaderData,
+  useLocation,
+  useMatches,
+  useTransition,
+} from "remix";
 import { Transition } from "@remix-run/react/transition";
+import { actionTarget } from "~/utils/forms";
 
 export async function loader(context: any) {
   const index = context.index;
@@ -25,7 +33,7 @@ export function component({ block }: { block: any }) {
   return (
     <div>
       <h1>{block.title}</h1>
-      <Form method="post" action={useLocation().pathname}>
+      <Form replace method="post" className="space-y-2" action={actionTarget()}>
         <input type="hidden" value={block._uid} name="uid" />
         <input type="hidden" value={block.component} name="component" />
         <input type="text" name="title" />
