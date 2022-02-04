@@ -1,15 +1,15 @@
 import type { MetaFunction, LoaderFunction, ActionFunction } from "remix";
 import { useLoaderData, Link } from "remix";
-import Storyblok from "~/storyblok/client";
+import Storyblok, { useStoryBlokBridge } from "~/storyblok/client";
 import DynamicComponent from "~/storyblok/components";
 import loaderHandler from "~/storyblok/loaderHandler";
 import actionHandler from "~/storyblok/actionHandler";
 
 export let loader: LoaderFunction = async ({ params }) => {
   // catch all slugs, or if no params we can assume
+  const language = params["language"];
   const slug = params["*"] || "home";
-  console.log(params);
-  const page = await Storyblok.get(`cdn/stories/${slug}`, {
+  const page = await Storyblok.getStory(`${language}/${slug}`, {
     version: "draft",
   });
 
@@ -18,6 +18,7 @@ export let loader: LoaderFunction = async ({ params }) => {
     headers: page.headers,
     meta: page.data.story.content.meta,
     content: page.data.story.content,
+    page,
     data,
   };
 };
@@ -37,7 +38,8 @@ export let meta: MetaFunction = ({ data }) => {
 // https://remix.run/guides/routing#index-routes
 export default function Catch() {
   let { content } = useLoaderData<any>();
-
+  const { addBridge } = useStoryBlokBridge();
+  addBridge();
   return (
     <div>
       <Link to="/one" prefetch="intent">

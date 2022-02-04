@@ -1,5 +1,6 @@
-import {Form, useActionData, useLoaderData, useLocation} from "remix";
+import { Form, useActionData, useLoaderData, useLocation } from "remix";
 import { actionTarget } from "~/utils/forms";
+import SbEditable from "storyblok-react";
 
 export async function loader(context: any) {
   const index = context.index;
@@ -14,19 +15,24 @@ export async function action(context: any) {
 export function component({ block }: { block: any }) {
   const { data } = useLoaderData<any>();
   const actionData = useActionData();
-
-
-
+  console.log(block);
   return (
-    <div>
-      <h1>{block.title}</h1>
-      <Form replace method="post" className="space-y-2" action={actionTarget()}>
-        <input type="hidden" value={block._uid} name="uid" />
-        <input type="hidden" value={block.component} name="component" />
-        <input type="text" name="title" />
-        <input type="text" name="description" />
-        <button>Submit</button>
-      </Form>
-    </div>
+    <SbEditable content={block}>
+      <div>
+        <h1>{block.title}</h1>
+        <Form
+          replace
+          method="post"
+          className="space-y-2"
+          action={actionTarget()}
+        >
+          <input type="hidden" value={block._uid} name="uid" />
+          <input type="hidden" value={block.component} name="component" />
+          <input type="text" name="title" />
+          <input type="text" name="description" />
+          <button>Submit</button>
+        </Form>
+      </div>
+    </SbEditable>
   );
 }
