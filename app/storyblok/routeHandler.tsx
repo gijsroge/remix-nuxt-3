@@ -18,7 +18,7 @@ export let loader: LoaderFunction = async ({ params }) => {
   return {
     headers: page.headers,
     meta: page.data.story.content.meta,
-    content: page.data.story.content,
+    story: page.data.story,
     page,
     data,
   };
@@ -38,15 +38,17 @@ export let meta: MetaFunction = ({ data }) => {
 
 // https://remix.run/guides/routing#index-routes
 export default function Catch() {
-  let { content } = useLoaderData<any>();
-  const { addBridge } = useBridge();
-  addBridge();
+  let { story: StoryData } = useLoaderData<any>();
+
+  // load storyblok bridge only in storyblok editor, this also auto updates story data
+  const { story } = useBridge(StoryData);
+
   return (
     <div>
       <Link to="/one" prefetch="intent">
         one
       </Link>
-      {content?.body.map((component: any) => (
+      {story?.content?.body.map((component: any) => (
         <DynamicComponent key={component._uid} component={component} />
       ))}
     </div>
