@@ -1,6 +1,7 @@
 import { createElement } from "react";
 import { component as AsyncComponent } from "~/storyblok/components/AsyncComponent";
 import { component as NormalComponent } from "~/storyblok/components/NormalComponent";
+import SbEditable from "storyblok-react";
 
 export const Components: any = {
   "async-component": AsyncComponent,
@@ -8,16 +9,25 @@ export const Components: any = {
 };
 
 const DynamicComponent = (props: any) => {
-  const block = props.component;
-  if (typeof Components[block?.component] !== "undefined") {
-    return createElement(Components[block?.component], {
-      key: block?._uid,
-      block,
-    });
+  const content = props.component;
+  if (typeof Components[content?.component] !== "undefined") {
+    const Component = Components[content?.component];
+    const props = {
+      key: content?._uid,
+      content,
+    };
+
+    return (
+      <SbEditable {...props}>
+        <Component {...props} />
+      </SbEditable>
+    );
   }
   return createElement(
-    () => <div>The component {block?.component} has not been created yet.</div>,
-    { key: block?._uid }
+    () => (
+      <div>The component {content?.component} has not been created yet.</div>
+    ),
+    { key: content?._uid }
   );
 };
 

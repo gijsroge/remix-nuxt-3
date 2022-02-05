@@ -1,6 +1,7 @@
 import type { MetaFunction, LoaderFunction, ActionFunction } from "remix";
 import { useLoaderData, Link } from "remix";
-import Storyblok, { useStoryBlokBridge } from "~/storyblok/client";
+import Storyblok from "~/storyblok/client";
+import { useBridge } from "~/storyblok/useBridge";
 import DynamicComponent from "~/storyblok/components";
 import loaderHandler from "~/storyblok/loaderHandler";
 import actionHandler from "~/storyblok/actionHandler";
@@ -38,7 +39,7 @@ export let meta: MetaFunction = ({ data }) => {
 // https://remix.run/guides/routing#index-routes
 export default function Catch() {
   let { content } = useLoaderData<any>();
-  const { addBridge } = useStoryBlokBridge();
+  const { addBridge } = useBridge();
   addBridge();
   return (
     <div>
