@@ -3,9 +3,12 @@ import { loader as AsyncComponentLoader } from "~/storyblok/components/AsyncComp
 import { loader as NormalComponentLoader } from "~/storyblok/components/NormalComponent";
 
 export default async function loaderHandler(story: Story) {
-  const loaders = story.data.story.content.body.map(async (component: any) => {
-    return await extractLoaderFromComponent(component);
-  });
+  const loaders = story.data.story.content.body.filter(
+    async (component: any) => {
+      if (ComponentLoaders[component.component])
+        return await extractLoaderFromComponent(component);
+    }
+  );
 
   // Assign data to an uid indexed Record
   return (await Promise.all(loaders)).reduce((previousValue, currentValue) => {
