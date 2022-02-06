@@ -8,8 +8,8 @@ import actionHandler from "~/storyblok/actionHandler";
 
 export let loader: LoaderFunction = async ({ params }) => {
   // catch all slugs, or if no params we can assume
-  const language = params["language"];
-  const slug = params["*"] || "home";
+  const language = params["language"] || "nl-be";
+  const slug = params["*"] || "index";
   const page = await Storyblok.getStory(`${language}/${slug}`, {
     version: "draft",
   });
