@@ -45,9 +45,6 @@ export default function Catch() {
 
   return (
     <div>
-      <Link to="/one" prefetch="intent">
-        one
-      </Link>
       {story?.content?.body.map((component: any) => (
         <DynamicComponent key={component._uid} component={component} />
       ))}

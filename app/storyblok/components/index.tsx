@@ -2,6 +2,7 @@ import { createElement } from "react";
 import { component as AsyncComponent } from "~/storyblok/components/AsyncComponent";
 import { component as NormalComponent } from "~/storyblok/components/NormalComponent";
 import { component as BackgroundBlock } from "~/storyblok/components/BackgroundBlock";
+import { component as SpacingBlock } from "~/storyblok/components/SpacingBlock";
 import { component as Title } from "~/storyblok/components/Title";
 import SbEditable from "storyblok-react";
 
@@ -9,6 +10,7 @@ export const Components: any = {
   "async-component": AsyncComponent,
   "normal-component": NormalComponent,
   "background-block": BackgroundBlock,
+  "spacing-block": SpacingBlock,
   title: Title,
 };
 

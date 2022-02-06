@@ -1,7 +1,4 @@
 export function component({ content }: { content: any }) {
-  return (
-    <div>
-      <h1>{content.title}</h1>
-    </div>
-  );
+  const Tag = content.tag || "h3";
+  return <Tag>{content.title}</Tag>;
 }
