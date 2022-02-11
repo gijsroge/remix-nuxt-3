@@ -3,6 +3,7 @@ import { component as AsyncComponent } from "~/storyblok/components/AsyncCompone
 import { component as NormalComponent } from "~/storyblok/components/NormalComponent";
 import { component as BackgroundBlock } from "~/storyblok/components/BackgroundBlock";
 import { component as SpacingBlock } from "~/storyblok/components/SpacingBlock";
+import { component as Newsletter } from "~/storyblok/components/Newsletter";
 import { component as Title } from "~/storyblok/components/Title";
 import SbEditable from "storyblok-react";
 
@@ -11,6 +12,7 @@ export const Components: any = {
   "normal-component": NormalComponent,
   "background-block": BackgroundBlock,
   "spacing-block": SpacingBlock,
+  newsletter: Newsletter,
   title: Title,
 };
 
