@@ -10,7 +10,7 @@ export function component({ content }: { content: any }) {
   console.log(newsletterData);
   return (
     <div>
-      <newsletter.Form noValidate method="post" action="/newsletter">
+      <newsletter.Form noValidate method="post" action="/action/newsletter">
         <input type="email" name="email" placeholder="email" />
         <button>submit</button>
 
