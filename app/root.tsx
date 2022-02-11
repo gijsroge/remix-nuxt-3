@@ -107,7 +107,6 @@ function Document({
         <Links />
       </head>
       <body className="p-4">
-        <Link to="/gijs">gijs</Link>
         {children}
         <ScrollRestoration />
         <Scripts />
